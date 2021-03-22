@@ -7,7 +7,6 @@ public class Course
     private String title;
     private String institution;
 
-
     public Course(String courseid, int level, String title, String institution)
     {
         this.courseid = courseid;
