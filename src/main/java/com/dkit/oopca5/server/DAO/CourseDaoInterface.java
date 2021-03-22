@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CourseDaoInterface
 {
-//    public List<User> findAllUsers() throws DaoException;
+    public List<Course> findAllCourses() throws DaoException;
 //
 //    public User findUserByUsernamePassword(String uname, String pword) throws DaoException;
 //
