@@ -1,4 +1,4 @@
-package com.dkit.oopca5.server;
+package com.dkit.oopca5.server.DAO;
 
 /*
 All of the database functionality should be here. You will need a DAO for each table that you are interacting with in the database
@@ -7,7 +7,7 @@ All of the database functionality should be here. You will need a DAO for each t
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import com.dkit.oopca5.server.DaoException;
+import com.dkit.oopca5.server.Exceptions.DaoException;
 
 public class MySqlDAO
 {
