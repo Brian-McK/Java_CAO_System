@@ -1,11 +1,9 @@
 package com.dkit.oopca5.server;
 
 import com.dkit.oopca5.core.DTO.Student;
-import com.dkit.oopca5.server.DAO.MySQLCourseDAO;
-import com.dkit.oopca5.server.DAO.CourseDaoInterface;
+import com.dkit.oopca5.core.DTO.StudentCourses;
+import com.dkit.oopca5.server.DAO.*;
 import com.dkit.oopca5.core.DTO.Course;
-import com.dkit.oopca5.server.DAO.MySQLStudentDAO;
-import com.dkit.oopca5.server.DAO.StudentDaoInterface;
 import com.dkit.oopca5.server.Exceptions.DaoException;
 import java.util.List;
 
@@ -20,6 +18,7 @@ public class CAOServer
     {
         CourseDaoInterface ICourseDao = new MySQLCourseDAO();
         StudentDaoInterface IStudentDao = new MySQLStudentDAO();
+        StudentCoursesDaoInterface IStudentCoursesDAO = new MySQLStudentCoursesDAO();
 
         try
         {
@@ -50,6 +49,24 @@ public class CAOServer
             for( Student student : students )
             {
                 System.out.println("Student: " + student.toString());
+            }
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            System.out.println("\nCall findAllStudentCourses()");
+            List<StudentCourses> studentCourses = IStudentCoursesDAO.findAllStudentCourses();
+
+            if( studentCourses.isEmpty() )
+                System.out.println("There are no StudentCourses");
+
+            for( StudentCourses studentCourseChoice : studentCourses )
+            {
+                System.out.println("StudentCourses: " + studentCourseChoice.toString());
             }
         }
         catch( DaoException e )
