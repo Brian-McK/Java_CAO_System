@@ -1,6 +1,6 @@
 package com.dkit.oopca5.server.DAO;
 
-import com.dkit.oopca5.server.DTO.Course;
+import com.dkit.oopca5.core.DTO.Course;
 import com.dkit.oopca5.server.Exceptions.DaoException;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.dkit.oopca5.server.DTO;
+package com.dkit.oopca5.core.DTO;
 
 import java.util.Date;
 
