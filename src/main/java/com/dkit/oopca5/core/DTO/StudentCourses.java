@@ -1,16 +1,17 @@
 package com.dkit.oopca5.core.DTO;
 
-import java.util.Date;
 
 public class StudentCourses
 {
     private int caoNumber;
     private String courseid;
+    private int choiceNumber;
 
-    public StudentCourses(int caoNumber, String courseid)
+    public StudentCourses(int caoNumber, String courseid, int choiceNumber)
     {
         this.caoNumber = caoNumber;
         this.courseid = courseid;
+        this.choiceNumber = choiceNumber;
     }
 
     public StudentCourses()
@@ -37,12 +38,23 @@ public class StudentCourses
         this.courseid = courseid;
     }
 
+    public int getChoiceNumber()
+    {
+        return choiceNumber;
+    }
+
+    public void setChoiceNumber(int choiceNumber)
+    {
+        this.choiceNumber = choiceNumber;
+    }
+
     @Override
     public String toString()
     {
         return "StudentCourses{" +
                 "caoNumber=" + caoNumber +
                 ", courseid='" + courseid + '\'' +
+                ", choiceNumber=" + choiceNumber +
                 '}';
     }
 }
