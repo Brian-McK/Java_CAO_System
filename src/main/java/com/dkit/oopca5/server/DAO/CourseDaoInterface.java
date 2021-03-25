@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CourseDaoInterface
 {
+    // TODO: 25/03/2021 - CONFUSED WHY IN EXAMPLES WE HAD TO OVERRIDE THE BELOW METHODS
+
     List<Course> findAllCourses() throws DaoException;
 
     Course findCourse(String courseid) throws DaoException;

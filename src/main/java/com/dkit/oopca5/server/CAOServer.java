@@ -22,16 +22,14 @@ public class CAOServer
 
         try
         {
-            System.out.println("\nCall findAllUsers()");
+            System.out.println("\nCall findAllCourses()");
             List<Course> courses = ICourseDao.findAllCourses();
 
             if( courses.isEmpty() )
                 System.out.println("There are no Courses");
+            else
+                displayCourses(courses);
 
-            for( Course course : courses )
-            {
-                System.out.println("Course: " + course.toString());
-            }
         }
         catch( DaoException e )
         {
@@ -45,6 +43,8 @@ public class CAOServer
 
             if( students.isEmpty() )
                 System.out.println("There are no Students");
+            else
+                displayStudents(students);
 
             for( Student student : students )
             {
@@ -63,6 +63,8 @@ public class CAOServer
 
             if( studentCourses.isEmpty() )
                 System.out.println("There are no StudentCourses");
+
+            // TODO: 25/03/2021 - ELSE, DISPLAY(STUDENTCOURSES) METHOD
 
             for( StudentCourses studentCourseChoice : studentCourses )
             {
@@ -83,10 +85,33 @@ public class CAOServer
                 System.out.println("There is no course");
             else
                 System.out.println("Course: " + course.toString());
+
+            // TODO: 25/03/2021 - ELSE, DISPLAY(COURSE) METHOD
+
         }
         catch( DaoException e )
         {
             e.printStackTrace();
         }
     }
+
+    private static void displayCourses(List<Course> courses)
+    {
+        System.out.printf("%-10s%8s %-50s%-30s\n", "CourseID","Level","Title","Institute");
+        for (Course course: courses)
+        {
+            System.out.printf("%-10s%8s %-50s%-30s\n", course.getCourseid(),course.getLevel(),course.getTitle(),
+                    course.getInstitution());
+        }
+    }
+
+    private static void displayStudents(List<Student> students)
+    {
+        System.out.printf("%-10s%8s %-50s\n", "CAO Number","DOB","Password");
+        for (Student student: students)
+        {
+            System.out.printf("%-10s%8s %-50s\n", student.getCaoNumber(),student.getDob(),student.getPassword());
+        }
+    }
+
 }
