@@ -73,5 +73,20 @@ public class CAOServer
         {
             e.printStackTrace();
         }
+
+        try
+        {
+            System.out.println("\nCall findCourse()");
+            Course course = ICourseDao.findCourse("DK121");
+
+            if( course == null)
+                System.out.println("There is no course");
+            else
+                System.out.println("Course: " + course.toString());
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
     }
 }

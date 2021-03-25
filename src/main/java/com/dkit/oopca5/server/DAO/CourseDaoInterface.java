@@ -7,8 +7,8 @@ import java.util.List;
 public interface CourseDaoInterface
 {
     List<Course> findAllCourses() throws DaoException;
-//
-//    public User findUserByUsernamePassword(String uname, String pword) throws DaoException;
+
+    Course findCourse(String courseid) throws DaoException;
 //
 //    public boolean updatePassword(String uname, String pword) throws DaoException;
 //
