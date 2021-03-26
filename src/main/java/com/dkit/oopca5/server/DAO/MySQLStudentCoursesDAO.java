@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MySQLStudentCoursesDAO extends MySqlDAO implements StudentCoursesDaoInterface
 {
-    public List<StudentCourses> findAllStudentCourses() throws DaoException
+    public List<StudentCourses> findAllStudentCourses(int studentCaoNumber) throws DaoException
     {
         Connection con = null;
         PreparedStatement ps = null;
@@ -20,11 +20,12 @@ public class MySQLStudentCoursesDAO extends MySqlDAO implements StudentCoursesDa
 
         try
         {
-            //Get connection object using the methods in the super class (MySqlDao.java)...
+            // Get connection object using the methods in the super class (MySqlDao.java)...
             con = this.getConnection();
 
-            String query = "SELECT * FROM student_courses";
+            String query = "SELECT * FROM student_courses WHERE caoNumber = ?";
             ps = con.prepareStatement(query);
+            ps.setInt(1, studentCaoNumber);
 
             //Using a PreparedStatement to execute SQL...
             rs = ps.executeQuery();

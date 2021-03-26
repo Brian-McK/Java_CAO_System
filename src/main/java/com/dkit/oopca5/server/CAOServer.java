@@ -54,7 +54,7 @@ public class CAOServer
         try
         {
             System.out.println("\nCall findAllStudentCourses()");
-            List<StudentCourses> studentCourses = IStudentCoursesDAO.findAllStudentCourses();
+            List<StudentCourses> studentCourses = IStudentCoursesDAO.findAllStudentCourses(12345678);
 
             if( studentCourses.isEmpty() )
                 System.out.println("There are no StudentCourses");

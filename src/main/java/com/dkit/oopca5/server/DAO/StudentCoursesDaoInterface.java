@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface StudentCoursesDaoInterface
 {
-    // TODO: 26/03/2021 - add argument caoNumber for findAllStudentCourses() - list of my choices
-    // make an update method - change course choices for a caonumber
-    List<StudentCourses> findAllStudentCourses() throws DaoException;
+    // make an update method - change course choices for a caoNumber
+    List<StudentCourses> findAllStudentCourses(int caoNumber) throws DaoException;
 }
