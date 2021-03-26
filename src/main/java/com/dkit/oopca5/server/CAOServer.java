@@ -45,11 +45,6 @@ public class CAOServer
                 System.out.println("There are no Students");
             else
                 displayStudents(students);
-
-            for( Student student : students )
-            {
-                System.out.println("Student: " + student.toString());
-            }
         }
         catch( DaoException e )
         {
@@ -63,6 +58,7 @@ public class CAOServer
 
             if( studentCourses.isEmpty() )
                 System.out.println("There are no StudentCourses");
+            else
 
             // TODO: 25/03/2021 - ELSE, DISPLAY(STUDENTCOURSES) METHOD
 
@@ -107,11 +103,10 @@ public class CAOServer
 
     private static void displayStudents(List<Student> students)
     {
-        System.out.printf("%-10s%8s %-50s\n", "CAO Number","DOB","Password");
+        System.out.printf("%-20s%10s %-10s\n", "CAO Number","DOB","Password");
         for (Student student: students)
         {
-            System.out.printf("%-10s%8s %-50s\n", student.getCaoNumber(),student.getDob(),student.getPassword());
+            System.out.printf("%-20s%10s %-10s\n", student.getCaoNumber(),student.getDob(),student.getPassword());
         }
     }
-
 }

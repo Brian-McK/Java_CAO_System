@@ -8,7 +8,7 @@ package com.dkit.oopca5.client;
 
 public class CAOClient
 {
-    // put in dto courseChoices
+    // put in dto courseChoices - ignore?
     // public List<String> findCoursesForUser(int caoNumber) throws DAOException;
     // public void updateCoursesForUser(int caoNumber, List<String> courses) throws DAOException;
 
