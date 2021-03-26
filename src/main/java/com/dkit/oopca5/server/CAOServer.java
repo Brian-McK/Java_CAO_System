@@ -59,13 +59,7 @@ public class CAOServer
             if( studentCourses.isEmpty() )
                 System.out.println("There are no StudentCourses");
             else
-
-            // TODO: 25/03/2021 - ELSE, DISPLAY(STUDENTCOURSES) METHOD
-
-            for( StudentCourses studentCourseChoice : studentCourses )
-            {
-                System.out.println("StudentCourses: " + studentCourseChoice.toString());
-            }
+                displayStudentCourses(studentCourses);
         }
         catch( DaoException e )
         {
@@ -107,6 +101,16 @@ public class CAOServer
         for (Student student: students)
         {
             System.out.printf("%-20s%10s %-10s\n", student.getCaoNumber(),student.getDob(),student.getPassword());
+        }
+    }
+
+    private static void displayStudentCourses(List<StudentCourses> studentCourses)
+    {
+        System.out.printf("%-20s%10s %-10s\n", "CAO Number","Course Id","Choice Number");
+        for (StudentCourses studentCourseChoice: studentCourses)
+        {
+            System.out.printf("%-20s%10s %-10s\n", studentCourseChoice.getCaoNumber(),studentCourseChoice.getCourseid(),
+                studentCourseChoice.getChoiceNumber());
         }
     }
 }
