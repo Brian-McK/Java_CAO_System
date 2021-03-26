@@ -61,6 +61,6 @@ public class MySQLStudentCoursesDAO extends MySqlDAO implements StudentCoursesDa
                 throw new DaoException("findAllStudentCourses() " + e.getMessage());
             }
         }
-        return studentCourseChoices;     // may be empty
+        return studentCourseChoices;
     }
 }
