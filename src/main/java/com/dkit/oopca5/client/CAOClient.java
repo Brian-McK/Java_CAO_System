@@ -64,10 +64,9 @@ public class CAOClient
                     case REGISTER:
                         register();
                         // check if the user does not already exist
-                        // check if the input is valid
                         break;
                     case LOGIN:
-                        System.out.println("LOGIN SELECTED");
+                        login();
                         break;
                     case QUIT_APPLICATION:
                         System.out.println("QUIT SELECTED");
@@ -134,6 +133,66 @@ public class CAOClient
                 CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
 
         System.out.println("Message ready for server: " + msgForServer);
+    }
+
+    private void login()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("*** LOGIN SELECTED ***");
+        System.out.println("*** To login, please enter your CAO Number, Date of Birth and your password ***");
+
+        System.out.println("Enter CAO Number: ");
+        String caoNumberStr = scan.nextLine();
+
+        while (!isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
+        {
+            System.out.println("Invalid entry, please enter a valid CAO Number (8 digits): ");
+            caoNumberStr = scan.nextLine();
+        }
+        int caoNumber = Integer.parseInt(caoNumberStr);
+        System.out.println("CAO Number: " + caoNumber);
+        // CAONumber e.g: 12345678
+
+        System.out.println("Enter Date of Birth: ");
+        String dobStr = scan.nextLine();
+
+        while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
+        {
+            System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
+            dobStr = scan.nextLine();
+        }
+        LocalDate dobObj = LocalDate.parse(dobStr);
+        System.out.println("Date of Birth: " + dobObj.toString());
+        // DOB e.g: 1990-12-05
+
+        System.out.println("Enter Password: ");
+        String password = scan.nextLine();
+
+        while (!isValidPassword(password, CAOService.PASSWORD_REGEX))
+        {
+            System.out.println("Invalid entry, Password must Contain: " + "\n" +
+                    "- A digit" + "\n" +
+                    "- A Lowercase letter" + "\n" +
+                    "- An uppercase letter" + "\n" +
+                    "- A special character" + "\n" +
+                    "- No Whitespace" + "\n" +
+                    "- At least 8 characters in length");
+            password = scan.nextLine();
+        }
+        // Password e.g: Brian!?123#
+
+        String msgForServer =
+                CAOService.LOGIN_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
+
+        System.out.println("Message ready for server: " + msgForServer);
+
+        // Check if the student is registered
+        // Check if the students details are correct
+        // if the students details are not correct, SERVER RESPONSE LOGIN FAILED & send them back to the top
+        // if the students details are correct, SERVER RESPONSE LOGGED IN
+
+
     }
 
     public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
