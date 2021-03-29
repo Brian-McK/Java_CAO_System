@@ -9,9 +9,13 @@ package com.dkit.oopca5.client;
 import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CAOClient
 {
@@ -87,18 +91,72 @@ public class CAOClient
         System.out.println("*** To register, please enter your CAO Number, Date of Birth and your password ***");
 
         System.out.println("Enter CAO Number: ");
-        int caoNumber = scan.nextInt();
-        scan.nextLine();
+        String caoNumberStr = scan.nextLine();
+
+        while (!isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
+        {
+            System.out.println("Invalid entry, please enter a valid CAO Number (8 digits): ");
+            caoNumberStr = scan.nextLine();
+        }
+        int caoNumber = Integer.parseInt(caoNumberStr);
+        System.out.println("CAO Number: " + caoNumber);
+        // CAONumber e.g: 12345678
 
         System.out.println("Enter Date of Birth: ");
-        String dateOfBirth = scan.next();
+        String dobStr = scan.nextLine();
+
+        while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
+        {
+            System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
+            dobStr = scan.nextLine();
+        }
+        LocalDate dobObj = LocalDate.parse(dobStr);
+        System.out.println("Date of Birth: " + dobObj.toString());
+        // DOB e.g: 1990-12-05
 
         System.out.println("Enter Password: ");
-        String password = scan.next();
+        String password = scan.nextLine();
+
+        while (!isValidPassword(password, CAOService.PASSWORD_REGEX))
+        {
+            System.out.println("Invalid entry, Password must Contain: " + "\n" +
+                    "- A digit" + "\n" +
+                    "- A Lowercase letter" + "\n" +
+                    "- An uppercase letter" + "\n" +
+                    "- A special character" + "\n" +
+                    "- No Whitespace" + "\n" +
+                    "- At least 8 characters in length");
+            password = scan.nextLine();
+        }
+        // Password e.g: Brian!?123#
 
         String msgForServer =
-                CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dateOfBirth + CAOService.BREAKING_CHARACTER + password;
+                CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
 
         System.out.println("Message ready for server: " + msgForServer);
+    }
+
+    public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
+    {
+        Pattern p = Pattern.compile(caoNumberRegex);
+        Matcher m = p.matcher(caoNumber);
+
+        return m.matches();
+    }
+
+    public static boolean isValidDOB(String dobStr, String dobRegex)
+    {
+        Pattern p = Pattern.compile(dobRegex);
+        Matcher m = p.matcher(dobStr);
+
+        return m.matches();
+    }
+
+    public static boolean isValidPassword(String password, String passwordRegex)
+    {
+        Pattern p = Pattern.compile(passwordRegex);
+        Matcher m = p.matcher(password);
+
+        return m.matches();
     }
 }

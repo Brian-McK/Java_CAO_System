@@ -8,6 +8,10 @@ public class CAOService
     public static final int PORT_NUM = 50025;
     public static final String HOSTNAME = "localhost";
 
+    public static final String CAO_NUMBER_REGEX = "^[0-9]{8}$";
+    public static final String DATE_OF_BIRTH_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
+    public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
     public static final String BREAKING_CHARACTER = "%%";
 
     public static final String REGISTER_COMMAND = "REGISTER";
