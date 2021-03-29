@@ -12,6 +12,7 @@ import com.dkit.oopca5.core.Colours;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -192,7 +193,52 @@ public class CAOClient
         // if the students details are not correct, SERVER RESPONSE LOGIN FAILED & send them back to the top
         // if the students details are correct, SERVER RESPONSE LOGGED IN
 
+        loggedIn(caoNumber, dobObj, password);
+    }
 
+    private void CAOCourseMenuLoop()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        CAOCourseMenu selectedOption = CAOCourseMenu.CONTINUE;
+        while (selectedOption != CAOCourseMenu.QUIT_APPLICATION)
+        {
+            try{
+                printMainMenuOptions();
+                selectedOption = CAOCourseMenu.values()[Integer.parseInt(scan.nextLine().trim())];
+
+                switch (selectedOption)
+                {
+                    case DISPLAY_COURSE:
+                        System.out.println("Display Course Selected");
+                        break;
+                    case DISPLAY_ALL_COURSES:
+                        System.out.println("Display All Courses Selected");
+                        break;
+                    case DISPLAY_CURRENT_CHOICES:
+                        System.out.println("Display Current Choices Selected");
+                        break;
+                    case UPDATE_CURRENT_CHOICES:
+                        System.out.println("Update Current Choices Selected");
+                        break;
+                    case LOGOUT:
+                        System.out.println("Logout Selected");
+                        break;
+                    default:
+                        System.out.println("Invalid entry, try again");
+                }
+            }
+            catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e)
+            {
+                System.out.println("Invalid entry, try again");
+            }
+        }
+    }
+
+    private void loggedIn(int caoNumber, LocalDate dobObj, String password)
+    {
+        System.out.println("You are now logged in " + caoNumber);
+        CAOCourseMenuLoop();
     }
 
     public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
