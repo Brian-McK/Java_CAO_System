@@ -6,6 +6,7 @@ package com.dkit.oopca5.client;
 /* The CAOClient offers students a menu and sends messages to the server using TCP Sockets
  */
 
+import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ public class CAOClient
 
     public static void main(String[] args)
     {
-        Scanner scan = new Scanner(System.in);
-
         System.out.println("*** WELCOME TO THE CAO ***");
 
         CAOClient client = new CAOClient();
@@ -49,7 +48,6 @@ public class CAOClient
     {
         Scanner scan = new Scanner(System.in);
 
-        // student menu
         MainMenu selectedOption = MainMenu.CONTINUE;
         while (selectedOption != MainMenu.QUIT_APPLICATION)
         {
@@ -60,7 +58,9 @@ public class CAOClient
                 switch (selectedOption)
                 {
                     case REGISTER:
-                        System.out.println("REGISTER SELECTED");
+                        register();
+                        // check if the user does not already exist
+                        // check if the input is valid
                         break;
                     case LOGIN:
                         System.out.println("LOGIN SELECTED");
@@ -77,5 +77,28 @@ public class CAOClient
                 System.out.println("Invalid entry, try again");
             }
         }
+    }
+
+    private void register()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("*** REGISTER SELECTED ***");
+        System.out.println("*** To register, please enter your CAO Number, Date of Birth and your password ***");
+
+        System.out.println("Enter CAO Number: ");
+        int caoNumber = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("Enter Date of Birth: ");
+        String dateOfBirth = scan.next();
+
+        System.out.println("Enter Password: ");
+        String password = scan.next();
+
+        String msgForServer =
+                CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dateOfBirth + CAOService.BREAKING_CHARACTER + password;
+
+        System.out.println("Message ready for server: " + msgForServer);
     }
 }
