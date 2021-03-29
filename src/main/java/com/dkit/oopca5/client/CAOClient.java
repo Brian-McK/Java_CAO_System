@@ -49,6 +49,15 @@ public class CAOClient
         }
     }
 
+    private void printCAOCourseMenuOptions()
+    {
+        System.out.println("\nEnter your choice:");
+        for (int i = 1; i < CAOCourseMenu.values().length; i++)
+        {
+            System.out.println("\t" + Colours.BLUE + i + ") " + CAOCourseMenu.values()[i].toString() + Colours.RESET);
+        }
+    }
+
     private void mainMenuLoop()
     {
         Scanner scan = new Scanner(System.in);
@@ -204,7 +213,7 @@ public class CAOClient
         while (selectedOption != CAOCourseMenu.QUIT_APPLICATION)
         {
             try{
-                printMainMenuOptions();
+                printCAOCourseMenuOptions();
                 selectedOption = CAOCourseMenu.values()[Integer.parseInt(scan.nextLine().trim())];
 
                 switch (selectedOption)
@@ -223,6 +232,9 @@ public class CAOClient
                         break;
                     case LOGOUT:
                         System.out.println("Logout Selected");
+                        break;
+                    case QUIT_APPLICATION:
+                        System.out.println("Quit Application Selected");
                         break;
                     default:
                         System.out.println("Invalid entry, try again");
