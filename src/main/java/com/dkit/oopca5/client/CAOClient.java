@@ -194,7 +194,7 @@ public class CAOClient
 
         // Check if the student is registered
         // Check if the students details are correct
-        // if the students details are not correct, SERVER RESPONSE LOGIN FAILED & send them back to the top
+        // if the students details are incorrect, SERVER RESPONSE LOGIN FAILED & send them back to the top
         // if the students details are correct, SERVER RESPONSE LOGGED IN then pass the student object to the
         // loggedIn method
 
@@ -202,7 +202,6 @@ public class CAOClient
         loggedIn(loggedInStudent);
     }
 
-    // TODO: 30/03/2021 - object as param?
     private void CAOCourseMenuLoop(Student student)
     {
         Scanner scan = new Scanner(System.in);
@@ -223,7 +222,7 @@ public class CAOClient
                         displayAllCourses();
                         break;
                     case DISPLAY_CURRENT_CHOICES:
-                        displayCurrentChoices();
+                        displayCurrentChoices(student.getCaoNumber());
                         break;
                     case UPDATE_CURRENT_CHOICES:
                         updateCurrentChoices(student.getCaoNumber());
@@ -248,7 +247,7 @@ public class CAOClient
     // TODO: 30/03/2021 - NOT SURE ABOUT BELOW ARGUMENTS
     private void loggedIn(Student student)
     {
-        System.out.println("You are now logged in " + student.getCaoNumber());
+        System.out.println("Welcome, You are now logged in CAO applicant: " + student.getCaoNumber());
         CAOCourseMenuLoop(student);
     }
 
@@ -315,11 +314,11 @@ public class CAOClient
         System.out.println("Client Request: " + msgForServer);
     }
 
-    private void displayCurrentChoices()
+    private void displayCurrentChoices(int caoNumber)
     {
         System.out.println("Display Current Choices Selected");
 
-        String msgForServer = CAOService.DISPLAY_ALL_COURSES_COMMAND;
+        String msgForServer = CAOService.DISPLAY_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber;
 
         System.out.println("Client Request: " + msgForServer);
     }
@@ -328,11 +327,19 @@ public class CAOClient
     {
         System.out.println("Update Current Choices Selected");
 
-        String courseId = "";
-        String newCourseId = "";
+        // ask them how many courses they would like to enter
+        // ask them to enter courses in order of top choice to last choice
+        // map? key value pair - key = courseId, value = choice number?
+
+        String oldCourseId = "OLD";
+        String newCourseId = "NEW";
 
         String msgForServer =
-                CAOService.UPDATE_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + courseId + CAOService.BREAKING_CHARACTER + newCourseId;
+                CAOService.UPDATE_CURRENT_COMMAND +
+                        CAOService.BREAKING_CHARACTER +
+                        caoNumber + CAOService.BREAKING_CHARACTER +
+                        oldCourseId + CAOService.BREAKING_CHARACTER +
+                        newCourseId;
 
         System.out.println("Client Request: " + msgForServer);
     }
