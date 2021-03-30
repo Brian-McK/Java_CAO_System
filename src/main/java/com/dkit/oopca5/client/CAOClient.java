@@ -8,8 +8,9 @@ package com.dkit.oopca5.client;
 
 import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
+import com.dkit.oopca5.core.DTO.Student;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,7 +114,7 @@ public class CAOClient
             System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
             dobStr = scan.nextLine();
         }
-        LocalDate dobObj = LocalDate.parse(dobStr);
+        Date dobObj = Date.valueOf(dobStr);
         System.out.println("Date of Birth: " + dobObj.toString());
         // DOB e.g: 1990-12-05
 
@@ -166,7 +167,7 @@ public class CAOClient
             System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
             dobStr = scan.nextLine();
         }
-        LocalDate dobObj = LocalDate.parse(dobStr);
+        Date dobObj = Date.valueOf(dobStr);
         System.out.println("Date of Birth: " + dobObj.toString());
         // DOB e.g: 1990-12-05
 
@@ -194,12 +195,15 @@ public class CAOClient
         // Check if the student is registered
         // Check if the students details are correct
         // if the students details are not correct, SERVER RESPONSE LOGIN FAILED & send them back to the top
-        // if the students details are correct, SERVER RESPONSE LOGGED IN
+        // if the students details are correct, SERVER RESPONSE LOGGED IN then pass the student object to the
+        // loggedIn method
 
-        loggedIn(caoNumber, dobObj, password);
+        Student loggedInStudent = new Student(caoNumber, dobObj, password);
+        loggedIn(loggedInStudent);
     }
 
-    private void CAOCourseMenuLoop()
+    // TODO: 30/03/2021 - object as param?
+    private void CAOCourseMenuLoop(Student student)
     {
         Scanner scan = new Scanner(System.in);
 
@@ -219,13 +223,13 @@ public class CAOClient
                         displayAllCourses();
                         break;
                     case DISPLAY_CURRENT_CHOICES:
-                        System.out.println("Display Current Choices Selected");
+                        displayCurrentChoices();
                         break;
                     case UPDATE_CURRENT_CHOICES:
-                        System.out.println("Update Current Choices Selected");
+                        updateCurrentChoices(student.getCaoNumber());
                         break;
                     case LOGOUT:
-                        System.out.println("Logout Selected");
+                        logout();
                         break;
                     case QUIT_APPLICATION:
                         System.out.println("Quit Application Selected");
@@ -241,10 +245,11 @@ public class CAOClient
         }
     }
 
-    private void loggedIn(int caoNumber, LocalDate dobObj, String password)
+    // TODO: 30/03/2021 - NOT SURE ABOUT BELOW ARGUMENTS
+    private void loggedIn(Student student)
     {
-        System.out.println("You are now logged in " + caoNumber);
-        CAOCourseMenuLoop();
+        System.out.println("You are now logged in " + student.getCaoNumber());
+        CAOCourseMenuLoop(student);
     }
 
     public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
@@ -306,6 +311,37 @@ public class CAOClient
         System.out.println("Display All Courses Selected");
 
         String msgForServer = CAOService.DISPLAY_ALL_COURSES_COMMAND;
+
+        System.out.println("Client Request: " + msgForServer);
+    }
+
+    private void displayCurrentChoices()
+    {
+        System.out.println("Display Current Choices Selected");
+
+        String msgForServer = CAOService.DISPLAY_ALL_COURSES_COMMAND;
+
+        System.out.println("Client Request: " + msgForServer);
+    }
+
+    private void updateCurrentChoices(int caoNumber)
+    {
+        System.out.println("Update Current Choices Selected");
+
+        String courseId = "";
+        String newCourseId = "";
+
+        String msgForServer =
+                CAOService.UPDATE_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + courseId + CAOService.BREAKING_CHARACTER + newCourseId;
+
+        System.out.println("Client Request: " + msgForServer);
+    }
+
+    private void logout()
+    {
+        System.out.println("Logout Selected");
+
+        String msgForServer = CAOService.LOGOUT_COMMAND;
 
         System.out.println("Client Request: " + msgForServer);
     }
