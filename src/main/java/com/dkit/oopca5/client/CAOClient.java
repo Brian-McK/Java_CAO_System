@@ -10,10 +10,6 @@ import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,8 +20,6 @@ public class CAOClient
     // public List<String> findCoursesForUser(int caoNumber) throws DAOException;
     // TODO: 26/03/2021 - below method
     // public void updateCoursesForUser(int caoNumber, List<String> courses) throws DAOException;
-
-    // TODO: 24/03/2021 - TWO MENUS
 
     public static void main(String[] args)
     {
@@ -142,7 +136,7 @@ public class CAOClient
         String msgForServer =
                 CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
 
-        System.out.println("Message ready for server: " + msgForServer);
+        System.out.println("Client Request: " + msgForServer);
     }
 
     private void login()
@@ -195,7 +189,7 @@ public class CAOClient
         String msgForServer =
                 CAOService.LOGIN_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
 
-        System.out.println("Message ready for server: " + msgForServer);
+        System.out.println("Client Request: " + msgForServer);
 
         // Check if the student is registered
         // Check if the students details are correct
@@ -219,10 +213,10 @@ public class CAOClient
                 switch (selectedOption)
                 {
                     case DISPLAY_COURSE:
-                        System.out.println("Display Course Selected");
+                        displayCourse();
                         break;
                     case DISPLAY_ALL_COURSES:
-                        System.out.println("Display All Courses Selected");
+                        displayAllCourses();
                         break;
                     case DISPLAY_CURRENT_CHOICES:
                         System.out.println("Display Current Choices Selected");
@@ -275,5 +269,44 @@ public class CAOClient
         Matcher m = p.matcher(password);
 
         return m.matches();
+    }
+
+    public static boolean isValidCourseId(String courseId, String courseIdRegex)
+    {
+        Pattern p = Pattern.compile(courseIdRegex);
+        Matcher m = p.matcher(courseId);
+
+        return m.matches();
+    }
+
+    private void displayCourse()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Display Course Selected");
+
+        System.out.println("Enter the Course ID to view the details of the course: ");
+        String courseid = scan.nextLine();
+
+        while (!isValidCourseId(courseid, CAOService.COURSE_ID_REGEX))
+        {
+            System.out.println("Invalid entry, please enter a valid Course ID (At least 1 number and 1 character): ");
+            courseid = scan.nextLine();
+        }
+        System.out.println("Course ID: " + courseid);
+        // courseid e.g: DK821
+
+        String msgForServer = CAOService.DISPLAY_COURSE_COMMAND + CAOService.BREAKING_CHARACTER + courseid;
+
+        System.out.println("Client Request: " + msgForServer);
+    }
+
+    private void displayAllCourses()
+    {
+        System.out.println("Display All Courses Selected");
+
+        String msgForServer = CAOService.DISPLAY_ALL_COURSES_COMMAND;
+
+        System.out.println("Client Request: " + msgForServer);
     }
 }

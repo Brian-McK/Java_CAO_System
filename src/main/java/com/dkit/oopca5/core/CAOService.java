@@ -11,6 +11,7 @@ public class CAOService
     public static final String CAO_NUMBER_REGEX = "^[0-9]{8}$";
     public static final String DATE_OF_BIRTH_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
     public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    public static final String COURSE_ID_REGEX = "[^\\w\\d]*(([0-9]+.*[A-Za-z]+.*)|[A-Za-z]+.*([0-9]+.*))";
 
     public static final String BREAKING_CHARACTER = "%%";
 
@@ -30,7 +31,7 @@ public class CAOService
     public static final String SUCCESSFUL_DISPLAY_COURSE = "SUCCESSFUL DISPLAY";
     public static final String FAILED_DISPLAY_COURSE = "DISPLAY FAILED";
 
-    public static final String DISPLAY_ALL_COURSES_COMMAND = "DISPLAY ALL";
+    public static final String DISPLAY_ALL_COURSES_COMMAND = "DISPLAY_ALL";
     public static final String SUCCESSFUL_DISPLAY_ALL_COURSES = "SUCCESSFUL DISPLAY ALL";
     public static final String FAILED_DISPLAY_ALL_COURSES = "FAILED DISPLAY ALL";
 
