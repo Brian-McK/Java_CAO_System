@@ -11,7 +11,7 @@ import com.dkit.oopca5.core.Colours;
 import com.dkit.oopca5.core.DTO.Student;
 
 import java.sql.Date;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +32,8 @@ public class CAOClient
 
     private void start()
     {
-        mainMenuLoop();
+        updateCurrentChoices(12345678);
+//        mainMenuLoop();
     }
 
     private void printMainMenuOptions()
@@ -327,19 +328,41 @@ public class CAOClient
     {
         System.out.println("Update Current Choices Selected");
 
-        // ask them how many courses they would like to enter
+        // Hashmap? key value pair - key = courseId, value = choice number?
+        // have a breaking condition to exit the loop
         // ask them to enter courses in order of top choice to last choice
-        // map? key value pair - key = courseId, value = choice number?
+
+        List<String> courseChoices = new ArrayList<>();
+        courseChoices.add("DK821");
+        courseChoices.add("DK666");
+        courseChoices.add("DK111");
+        courseChoices.add("MAY212");
+
+//        Map<String, Integer> courseChoices = new HashMap<>();
+//        System.out.println("Enter course choices in order of preference: ");
+//        int choiceNumber = 0;
+//        courseChoices.put("DK821",++choiceNumber);
+//        courseChoices.put("DK666",++choiceNumber);
+//        courseChoices.put("DK111",++choiceNumber);
+//        courseChoices.put("MAY212",++choiceNumber);
+
+//        for (Map.Entry<String, Integer> entry : courseChoices.entrySet())
+//        {
+//            String courseID = entry.getKey();
+//            int courseChoiceNumber = entry.getValue();
+//            System.out.println("courseID: " + courseID + ", #" + courseChoiceNumber);
+//        }
+
+        System.out.println(courseChoices.toString());
 
         String oldCourseId = "OLD";
-        String newCourseId = "NEW";
 
         String msgForServer =
                 CAOService.UPDATE_CURRENT_COMMAND +
                         CAOService.BREAKING_CHARACTER +
                         caoNumber + CAOService.BREAKING_CHARACTER +
                         oldCourseId + CAOService.BREAKING_CHARACTER +
-                        newCourseId;
+                        courseChoices.toString();
 
         System.out.println("Client Request: " + msgForServer);
     }

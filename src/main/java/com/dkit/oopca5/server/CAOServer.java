@@ -5,6 +5,8 @@ import com.dkit.oopca5.core.DTO.StudentCourses;
 import com.dkit.oopca5.server.DAO.*;
 import com.dkit.oopca5.core.DTO.Course;
 import com.dkit.oopca5.server.Exceptions.DaoException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /* The server package should contain all code to run the server. The server uses TCP sockets and thread per client.
@@ -22,6 +24,27 @@ public class CAOServer
 
         try
         {
+            System.out.println("\nCall updateCoursesForUser()");
+            List<String> courses = new ArrayList<>();
+            courses.add("DK121");
+            courses.add("DK821");
+            courses.add("MYN231");
+
+            if(!IStudentCoursesDAO.updateCoursesForUser(12345678,courses))
+            {
+                System.out.println("Course choices update didn't work");
+            }
+            else {
+                System.out.println("Course choices updated");
+            }
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
             System.out.println("\nCall findAllCourses()");
             List<Course> courses = ICourseDao.findAllCourses();
 
@@ -29,7 +52,6 @@ public class CAOServer
                 System.out.println("There are no Courses");
             else
                 displayCourses(courses);
-
         }
         catch( DaoException e )
         {
@@ -74,10 +96,7 @@ public class CAOServer
             if( course == null)
                 System.out.println("There is no course");
             else
-                System.out.println("Course: " + course.toString());
-
-            // TODO: 25/03/2021 - ELSE, DISPLAY(COURSE) METHOD
-
+                displayCourse(course);
         }
         catch( DaoException e )
         {
@@ -93,6 +112,12 @@ public class CAOServer
             System.out.printf("%-10s%8s %-50s%-30s\n", course.getCourseid(),course.getLevel(),course.getTitle(),
                     course.getInstitution());
         }
+    }
+
+    private static void displayCourse(Course course)
+    {
+        System.out.printf("%-10s%8s %-50s%-30s\n", "CourseID","Level","Title","Institute");
+        System.out.printf("%-10s%8s %-50s%-30s\n", course.getCourseid(),course.getLevel(),course.getTitle(),course.getInstitution());
     }
 
     private static void displayStudents(List<Student> students)
