@@ -15,13 +15,13 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: 31/03/2021 - FIX THE UPDATE METHOD, ADD IN A LOOP WITH A BREAK CONDITION
+// TODO: 31/03/2021 - SQL TABLE DUMP
+// TODO: 31/03/2021 - TESTS
+
+
 public class CAOClient
 {
-    // put in dto courseChoices - ignore?
-    // public List<String> findCoursesForUser(int caoNumber) throws DAOException;
-    // TODO: 26/03/2021 - below method
-    // public void updateCoursesForUser(int caoNumber, List<String> courses) throws DAOException;
-
     public static void main(String[] args)
     {
         System.out.println("*** WELCOME TO THE CAO ***");
@@ -32,8 +32,7 @@ public class CAOClient
 
     private void start()
     {
-        updateCurrentChoices(12345678);
-//        mainMenuLoop();
+        mainMenuLoop();
     }
 
     private void printMainMenuOptions()
@@ -69,7 +68,6 @@ public class CAOClient
                 {
                     case REGISTER:
                         register();
-                        // check if the user does not already exist
                         break;
                     case LOGIN:
                         login();
@@ -245,7 +243,6 @@ public class CAOClient
         }
     }
 
-    // TODO: 30/03/2021 - NOT SURE ABOUT BELOW ARGUMENTS
     private void loggedIn(Student student)
     {
         System.out.println("Welcome, You are now logged in CAO applicant: " + student.getCaoNumber());
@@ -328,41 +325,22 @@ public class CAOClient
     {
         System.out.println("Update Current Choices Selected");
 
-        // Hashmap? key value pair - key = courseId, value = choice number?
         // have a breaking condition to exit the loop
         // ask them to enter courses in order of top choice to last choice
 
-        List<String> courseChoices = new ArrayList<>();
-        courseChoices.add("DK821");
-        courseChoices.add("DK666");
-        courseChoices.add("DK111");
-        courseChoices.add("MAY212");
+        List<String> newCourseChoices = new ArrayList<>();
+        newCourseChoices.add("DK821");
+        newCourseChoices.add("DK666");
+        newCourseChoices.add("DK111");
+        newCourseChoices.add("MAY212");
 
-//        Map<String, Integer> courseChoices = new HashMap<>();
-//        System.out.println("Enter course choices in order of preference: ");
-//        int choiceNumber = 0;
-//        courseChoices.put("DK821",++choiceNumber);
-//        courseChoices.put("DK666",++choiceNumber);
-//        courseChoices.put("DK111",++choiceNumber);
-//        courseChoices.put("MAY212",++choiceNumber);
-
-//        for (Map.Entry<String, Integer> entry : courseChoices.entrySet())
-//        {
-//            String courseID = entry.getKey();
-//            int courseChoiceNumber = entry.getValue();
-//            System.out.println("courseID: " + courseID + ", #" + courseChoiceNumber);
-//        }
-
-        System.out.println(courseChoices.toString());
-
-        String oldCourseId = "OLD";
+        System.out.println(newCourseChoices.toString());
 
         String msgForServer =
                 CAOService.UPDATE_CURRENT_COMMAND +
                         CAOService.BREAKING_CHARACTER +
                         caoNumber + CAOService.BREAKING_CHARACTER +
-                        oldCourseId + CAOService.BREAKING_CHARACTER +
-                        courseChoices.toString();
+                        newCourseChoices.toString();
 
         System.out.println("Client Request: " + msgForServer);
     }
