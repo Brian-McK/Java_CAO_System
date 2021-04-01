@@ -34,8 +34,7 @@ public class CAOClient
 
     private void start()
     {
-        updateCurrentChoices(12345678);
-//        mainMenuLoop();
+        mainMenuLoop();
     }
 
     private void printMainMenuOptions()
@@ -350,7 +349,6 @@ public class CAOClient
                 newCourseChoiceId = scan.nextLine();
             }
             newCourseChoicesHashSet.add(newCourseChoiceId);
-            System.out.println(newCourseChoicesHashSet.toString());
 
             counter++;
         }
