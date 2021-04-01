@@ -10,12 +10,14 @@ import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 import com.dkit.oopca5.core.DTO.Student;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+
 import java.sql.Date;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// TODO: 31/03/2021 - FIX THE UPDATE METHOD, ADD IN A LOOP WITH A BREAK CONDITION
 // TODO: 31/03/2021 - SQL TABLE DUMP
 // TODO: 31/03/2021 - TESTS
 
@@ -32,7 +34,8 @@ public class CAOClient
 
     private void start()
     {
-        mainMenuLoop();
+        updateCurrentChoices(12345678);
+//        mainMenuLoop();
     }
 
     private void printMainMenuOptions()
@@ -105,7 +108,7 @@ public class CAOClient
         System.out.println("CAO Number: " + caoNumber);
         // CAONumber e.g: 12345678
 
-        System.out.println("Enter Date of Birth: ");
+        System.out.println("Enter Date of Birth e.g 1990-12-05: ");
         String dobStr = scan.nextLine();
 
         while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
@@ -158,7 +161,7 @@ public class CAOClient
         System.out.println("CAO Number: " + caoNumber);
         // CAONumber e.g: 12345678
 
-        System.out.println("Enter Date of Birth: ");
+        System.out.println("Enter Date of Birth e.g 1990-12-05: ");
         String dobStr = scan.nextLine();
 
         while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
@@ -191,8 +194,6 @@ public class CAOClient
 
         System.out.println("Client Request: " + msgForServer);
 
-        // Check if the student is registered
-        // Check if the students details are correct
         // if the students details are incorrect, SERVER RESPONSE LOGIN FAILED & send them back to the top
         // if the students details are correct, SERVER RESPONSE LOGGED IN then pass the student object to the
         // loggedIn method
@@ -206,7 +207,7 @@ public class CAOClient
         Scanner scan = new Scanner(System.in);
 
         CAOCourseMenu selectedOption = CAOCourseMenu.CONTINUE;
-        while (selectedOption != CAOCourseMenu.QUIT_APPLICATION)
+        while ((selectedOption != CAOCourseMenu.QUIT_APPLICATION) && (selectedOption != CAOCourseMenu.LOGOUT))
         {
             try{
                 printCAOCourseMenuOptions();
@@ -323,24 +324,43 @@ public class CAOClient
 
     private void updateCurrentChoices(int caoNumber)
     {
+        Scanner scan = new Scanner(System.in);
+
         System.out.println("Update Current Choices Selected");
 
-        // have a breaking condition to exit the loop
-        // ask them to enter courses in order of top choice to last choice
+        LinkedHashSet<String> newCourseChoicesHashSet = new LinkedHashSet<>();
+        int counter = 1;
 
-        List<String> newCourseChoices = new ArrayList<>();
-        newCourseChoices.add("DK821");
-        newCourseChoices.add("DK666");
-        newCourseChoices.add("DK111");
-        newCourseChoices.add("MAY212");
+        System.out.println("Enter your new course choices in order of preference (duplicates will be removed): ");
 
-        System.out.println(newCourseChoices.toString());
+        while (true)
+        {
+            System.out.println("Enter Course id for #" + counter + " choice: ");
+            String newCourseChoiceId = scan.nextLine();
+
+            if(newCourseChoiceId.equalsIgnoreCase("Exit"))
+            {
+                System.out.println("Exited");
+                break;
+            }
+
+            while (!isValidCourseId(newCourseChoiceId, CAOService.COURSE_ID_REGEX))
+            {
+                System.out.println("Invalid entry, please enter a valid Course ID (At least 1 number and 1 character): ");
+                newCourseChoiceId = scan.nextLine();
+            }
+            newCourseChoicesHashSet.add(newCourseChoiceId);
+            System.out.println(newCourseChoicesHashSet.toString());
+
+            counter++;
+        }
+        ArrayList<String> newCourseChoicesNoDups = new ArrayList<>(newCourseChoicesHashSet);
 
         String msgForServer =
                 CAOService.UPDATE_CURRENT_COMMAND +
                         CAOService.BREAKING_CHARACTER +
                         caoNumber + CAOService.BREAKING_CHARACTER +
-                        newCourseChoices.toString();
+                        newCourseChoicesNoDups.toString();
 
         System.out.println("Client Request: " + msgForServer);
     }
