@@ -1,10 +1,10 @@
 package com.dkit.oopca5.core.test;
 
+// Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+
+import com.dkit.oopca5.client.RegexChecker;
 import com.dkit.oopca5.core.CAOService;
 import org.junit.Test;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +25,7 @@ public class AppTest
     {
         System.out.println("Testing Regex CAO Number");
         String caoNumber = "12345678";
-        assertTrue(isValidCAONumber(caoNumber, CAOService.CAO_NUMBER_REGEX));
+        assertTrue(RegexChecker.isValidCAONumber(caoNumber, CAOService.CAO_NUMBER_REGEX));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AppTest
     {
         System.out.println("Testing Regex DOB");
         String dob = "1990-12-05";
-        assertTrue(isValidDOB(dob, CAOService.DATE_OF_BIRTH_REGEX));
+        assertTrue(RegexChecker.isValidDOB(dob, CAOService.DATE_OF_BIRTH_REGEX));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class AppTest
     {
         System.out.println("Testing Regex Password");
         String password = "Brian!?123#";
-        assertTrue(isValidPassword(password, CAOService.PASSWORD_REGEX));
+        assertTrue(RegexChecker.isValidPassword(password, CAOService.PASSWORD_REGEX));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class AppTest
     {
         System.out.println("Testing Regex Course ID");
         String courseID = "DK821";
-        assertTrue(isValidCourseId(courseID, CAOService.COURSE_ID_REGEX));
+        assertTrue(RegexChecker.isValidCourseId(courseID, CAOService.COURSE_ID_REGEX));
     }
 
     @Test
@@ -79,37 +79,5 @@ public class AppTest
         String expectedResult = "DISPLAY CURRENT%%12345678";
         String actualResult = CAOService.DISPLAY_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber;
         assertEquals(expectedResult,actualResult);
-    }
-
-    public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
-    {
-        Pattern p = Pattern.compile(caoNumberRegex);
-        Matcher m = p.matcher(caoNumber);
-
-        return m.matches();
-    }
-
-    public static boolean isValidDOB(String dobStr, String dobRegex)
-    {
-        Pattern p = Pattern.compile(dobRegex);
-        Matcher m = p.matcher(dobStr);
-
-        return m.matches();
-    }
-
-    public static boolean isValidPassword(String password, String passwordRegex)
-    {
-        Pattern p = Pattern.compile(passwordRegex);
-        Matcher m = p.matcher(password);
-
-        return m.matches();
-    }
-
-    public static boolean isValidCourseId(String courseId, String courseIdRegex)
-    {
-        Pattern p = Pattern.compile(courseIdRegex);
-        Matcher m = p.matcher(courseId);
-
-        return m.matches();
     }
 }

@@ -1,5 +1,7 @@
 package com.dkit.oopca5.client;
 
+// Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+
 /* The client package should contain all code and classes needed to run the Client
  */
 
@@ -15,12 +17,6 @@ import java.util.LinkedHashSet;
 
 import java.sql.Date;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-// TODO: 31/03/2021 - SQL TABLE DUMP
-// TODO: 31/03/2021 - TESTS
-
 
 public class CAOClient
 {
@@ -98,7 +94,7 @@ public class CAOClient
         System.out.println("Enter CAO Number: ");
         String caoNumberStr = scan.nextLine();
 
-        while (!isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
+        while (!RegexChecker.isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
         {
             System.out.println("Invalid entry, please enter a valid CAO Number (8 digits): ");
             caoNumberStr = scan.nextLine();
@@ -110,7 +106,7 @@ public class CAOClient
         System.out.println("Enter Date of Birth e.g 1990-12-05: ");
         String dobStr = scan.nextLine();
 
-        while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
+        while (!RegexChecker.isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
         {
             System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
             dobStr = scan.nextLine();
@@ -122,7 +118,7 @@ public class CAOClient
         System.out.println("Enter Password: ");
         String password = scan.nextLine();
 
-        while (!isValidPassword(password, CAOService.PASSWORD_REGEX))
+        while (!RegexChecker.isValidPassword(password, CAOService.PASSWORD_REGEX))
         {
             System.out.println("Invalid entry, Password must Contain: " + "\n" +
                     "- A digit" + "\n" +
@@ -151,7 +147,7 @@ public class CAOClient
         System.out.println("Enter CAO Number: ");
         String caoNumberStr = scan.nextLine();
 
-        while (!isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
+        while (!RegexChecker.isValidCAONumber(caoNumberStr, CAOService.CAO_NUMBER_REGEX))
         {
             System.out.println("Invalid entry, please enter a valid CAO Number (8 digits): ");
             caoNumberStr = scan.nextLine();
@@ -163,7 +159,7 @@ public class CAOClient
         System.out.println("Enter Date of Birth e.g 1990-12-05: ");
         String dobStr = scan.nextLine();
 
-        while (!isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
+        while (!RegexChecker.isValidDOB(dobStr, CAOService.DATE_OF_BIRTH_REGEX))
         {
             System.out.println("Invalid entry, please enter date of birth again (yyyy-mm-dd): ");
             dobStr = scan.nextLine();
@@ -175,7 +171,7 @@ public class CAOClient
         System.out.println("Enter Password: ");
         String password = scan.nextLine();
 
-        while (!isValidPassword(password, CAOService.PASSWORD_REGEX))
+        while (!RegexChecker.isValidPassword(password, CAOService.PASSWORD_REGEX))
         {
             System.out.println("Invalid entry, Password must Contain: " + "\n" +
                     "- A digit" + "\n" +
@@ -249,38 +245,6 @@ public class CAOClient
         CAOCourseMenuLoop(student);
     }
 
-    public static boolean isValidCAONumber(String caoNumber, String caoNumberRegex)
-    {
-        Pattern p = Pattern.compile(caoNumberRegex);
-        Matcher m = p.matcher(caoNumber);
-
-        return m.matches();
-    }
-
-    public static boolean isValidDOB(String dobStr, String dobRegex)
-    {
-        Pattern p = Pattern.compile(dobRegex);
-        Matcher m = p.matcher(dobStr);
-
-        return m.matches();
-    }
-
-    public static boolean isValidPassword(String password, String passwordRegex)
-    {
-        Pattern p = Pattern.compile(passwordRegex);
-        Matcher m = p.matcher(password);
-
-        return m.matches();
-    }
-
-    public static boolean isValidCourseId(String courseId, String courseIdRegex)
-    {
-        Pattern p = Pattern.compile(courseIdRegex);
-        Matcher m = p.matcher(courseId);
-
-        return m.matches();
-    }
-
     private void displayCourse()
     {
         Scanner scan = new Scanner(System.in);
@@ -290,7 +254,7 @@ public class CAOClient
         System.out.println("Enter the Course ID to view the details of the course: ");
         String courseid = scan.nextLine();
 
-        while (!isValidCourseId(courseid, CAOService.COURSE_ID_REGEX))
+        while (!RegexChecker.isValidCourseId(courseid, CAOService.COURSE_ID_REGEX))
         {
             System.out.println("Invalid entry, please enter a valid Course ID (At least 1 number and 1 character): ");
             courseid = scan.nextLine();
@@ -343,7 +307,7 @@ public class CAOClient
                 break;
             }
 
-            while (!isValidCourseId(newCourseChoiceId, CAOService.COURSE_ID_REGEX))
+            while (!RegexChecker.isValidCourseId(newCourseChoiceId, CAOService.COURSE_ID_REGEX))
             {
                 System.out.println("Invalid entry, please enter a valid Course ID (At least 1 number and 1 character): ");
                 newCourseChoiceId = scan.nextLine();

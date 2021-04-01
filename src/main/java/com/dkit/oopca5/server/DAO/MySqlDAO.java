@@ -1,5 +1,7 @@
 package com.dkit.oopca5.server.DAO;
 
+// Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+
 /*
 All of the database functionality should be here. You will need a DAO for each table that you are interacting with in the database
  */

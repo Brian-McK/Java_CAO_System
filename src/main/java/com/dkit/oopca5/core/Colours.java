@@ -1,5 +1,7 @@
 package com.dkit.oopca5.core;
 
+// Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+
 /*The core package should contain all of the classes
   that are shared between the Client and Server
  */

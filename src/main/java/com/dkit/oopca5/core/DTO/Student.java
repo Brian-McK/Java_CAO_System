@@ -1,5 +1,7 @@
 package com.dkit.oopca5.core.DTO;
 
+// Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+
 import java.util.Date;
 
 public class Student
