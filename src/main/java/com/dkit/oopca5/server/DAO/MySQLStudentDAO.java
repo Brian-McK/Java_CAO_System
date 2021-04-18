@@ -115,4 +115,52 @@ public class MySQLStudentDAO extends MySqlDAO implements StudentDaoInterface
         }
         return registeredSuccessfully;
     }
+
+    public boolean checkIfRegistered(Student student) throws DaoException
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean isRegistered = false;
+
+        try
+        {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM Student WHERE caoNumber = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, student.getCaoNumber());  // search based on the cao number
+
+            rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+                isRegistered = true;
+            }
+        } catch (SQLException e)
+        {
+            throw new DaoException("checkIfRegistered() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (con != null)
+                {
+                    freeConnection(con);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("checkIfRegistered() " + e.getMessage());
+            }
+        }
+        return isRegistered;
+    }
 }

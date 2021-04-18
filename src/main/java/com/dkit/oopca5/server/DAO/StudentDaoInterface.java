@@ -10,7 +10,9 @@ public interface StudentDaoInterface
 {
     List<Student> findAllStudents() throws DaoException;
 
-    // register and login
-
     boolean registerStudent(Student student) throws DaoException;
+
+    boolean checkIfRegistered(Student student) throws DaoException;
+
+//    boolean loginStudent(Student student) throws DaoException;
 }

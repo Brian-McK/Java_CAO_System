@@ -111,4 +111,26 @@ public class AppTest
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void TestCheckIfRegisteredStudentDAO()
+    {
+        StudentDaoInterface studentDaoInterface = new MySQLStudentDAO();
+        Student student = new Student();
+        student.setCaoNumber(246810);
+        String dobStr = "1990-01-01";
+        Date dobObj = Date.valueOf(dobStr);
+        student.setDob(dobObj);
+        student.setPassword("Billy!?123#");
+
+        try
+        {
+            System.out.println("Test checkIfRegistered()");
+            assertTrue(studentDaoInterface.checkIfRegistered(student));
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
 }
