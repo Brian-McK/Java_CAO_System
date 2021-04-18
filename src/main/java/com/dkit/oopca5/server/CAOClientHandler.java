@@ -86,7 +86,20 @@ public class CAOClientHandler implements Runnable
                 }
                 else if(message.startsWith(CAOService.LOGIN_COMMAND))
                 {
+                    String response = CAOService.FAILED_LOGIN;
+                    String [] components = message.split(CAOService.BREAKING_CHARACTER);
 
+                    int caoNumber = Integer.parseInt(components[1]);
+                    Date dobObj = Date.valueOf(components[2]);
+                    String password = components[3];
+
+                    Student student = new Student(caoNumber,dobObj,password);
+
+                    if(IStudentDao.loginStudent(student))
+                    {
+                        response = CAOService.SUCCESSFUL_LOGIN;
+                    }
+                    socketWriter.println(response);
                 }
 //                if (message.startsWith("Time"))
 //                {
@@ -104,7 +117,7 @@ public class CAOClientHandler implements Runnable
                 }
             }
 
-//            socket.close();
+            socket.close();
 
         } catch (IOException | DaoException ex)
         {

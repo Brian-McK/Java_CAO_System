@@ -219,17 +219,45 @@ public class CAOClient
         }
         // Password e.g: Brian!?123#
 
+        try {
+            Socket socket = new Socket("localhost", 8080);  // connect to server socket
+
+            System.out.println("Client message: The Client is running and has connected to the server");
+
         String msgForServer =
                 CAOService.LOGIN_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
 
         System.out.println("Client Request: " + msgForServer);
 
+            OutputStream os = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.write(msgForServer+"\n");  // write command to socket, and newline terminator
+            out.flush();              // flush (force) the command over the socket
+
+            Scanner inStream = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            String response = inStream.nextLine();
+
         // if the students details are incorrect, SERVER RESPONSE LOGIN FAILED & send them back to the top
         // if the students details are correct, SERVER RESPONSE LOGGED IN then pass the student object to the
         // loggedIn method
 
-        Student loggedInStudent = new Student(caoNumber, dobObj, password);
-        loggedIn(loggedInStudent);
+            if(response.equals(CAOService.SUCCESSFUL_LOGIN)){
+                System.out.println(Colours.GREEN + "Successfully logged in" + Colours.RESET);
+                Student loggedInStudent = new Student(caoNumber, dobObj, password);
+                loggedIn(loggedInStudent);
+            }
+            else {
+                System.out.println(Colours.RED + "Not logged in" + Colours.RESET);
+            }
+            out.close();
+            inStream.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
     }
 
     private void CAOCourseMenuLoop(Student student)
