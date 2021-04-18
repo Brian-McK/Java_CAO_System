@@ -101,6 +101,12 @@ public class CAOClientHandler implements Runnable
                     }
                     socketWriter.println(response);
                 }
+                else if(message.startsWith(CAOService.LOGOUT_COMMAND))
+                {
+                    String response = CAOService.SUCCESSFUL_LOGOUT;
+                    socketWriter.println(response);
+                }
+
 //                if (message.startsWith("Time"))
 //                {
 //                    LocalTime time =  LocalTime.now();
