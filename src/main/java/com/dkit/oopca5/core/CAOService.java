@@ -41,7 +41,7 @@ public class CAOService
     public static final String FAILED_DISPLAY_CURRENT = "FAILED DISPLAY CURRENT";
 
     public static final String UPDATE_CURRENT_COMMAND = "UPDATE CURRENT";
-    public static final String SUCCESSFUL_UPDATE_CURRENT = "SUCCESSFUL UPDATE CURRENT";
-    public static final String FAILED_UPDATE_CURRENT = "FAILED UPDATE CURRENT";
+    public static final String SUCCESSFUL_UPDATE_CURRENT = "SUCCESSFUL UPDATE";
+    public static final String FAILED_UPDATE_CURRENT = "FAILED UPDATE";
 
 }

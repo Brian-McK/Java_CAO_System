@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.sql.Date;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CAOClientHandler implements Runnable
@@ -175,16 +176,23 @@ public class CAOClientHandler implements Runnable
                     }
                     socketWriter.println(response);
                 }
-//                if (message.startsWith("Time"))
-//                {
-//                    LocalTime time =  LocalTime.now();
-//                    socketWriter.println(time);  // sends response to client
-//                }
-//                else if (message.startsWith("Echo"))
-//                {
-//                    message = message.substring(5); // strip off the 'Echo ' part
-//                    socketWriter.println(message);  // send message to client
-//                }
+                else if(message.startsWith(CAOService.UPDATE_CURRENT_COMMAND))
+                {
+                    String response = CAOService.FAILED_UPDATE_CURRENT;
+                    String [] components = message.split(CAOService.BREAKING_CHARACTER);
+                    int caoNumber = Integer.parseInt(components[1]);
+
+                    List<String> courses = new ArrayList<>();
+                    for (int i = 2; i < components.length; i++)
+                    {
+                        courses.add(components[i]);
+                    }
+
+                    if(IStudentCoursesDAO.updateCoursesForUser(caoNumber,courses)) {
+                        response = CAOService.SUCCESSFUL_UPDATE_CURRENT;
+                    }
+                    socketWriter.println(response);
+                }
                 else
                 {
                     socketWriter.println("I'm sorry I don't understand :(");

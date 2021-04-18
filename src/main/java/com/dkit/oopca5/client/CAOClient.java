@@ -441,7 +441,6 @@ public class CAOClient
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Update Current Choices Selected");
-
         LinkedHashSet<String> newCourseChoicesHashSet = new LinkedHashSet<>();
         int counter = 1;
 
@@ -469,13 +468,43 @@ public class CAOClient
         }
         ArrayList<String> newCourseChoicesNoDups = new ArrayList<>(newCourseChoicesHashSet);
 
-        String msgForServer =
-                CAOService.UPDATE_CURRENT_COMMAND +
-                        CAOService.BREAKING_CHARACTER +
-                        caoNumber + CAOService.BREAKING_CHARACTER +
-                        newCourseChoicesNoDups.toString();
+        try {
+            Socket socket = new Socket("localhost", 8080);  // connect to server socket
+
+            System.out.println("Client message: The Client is running and has connected to the server");
+
+        String msgForServer = CAOService.UPDATE_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber;
+
+        for (int i = 0; i < newCourseChoicesNoDups.size(); i++)
+        {
+            msgForServer += CAOService.BREAKING_CHARACTER + newCourseChoicesNoDups.get(i);
+        }
 
         System.out.println("Client Request: " + msgForServer);
+
+            OutputStream os = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.write(msgForServer+"\n");  // write command to socket, and newline terminator
+            out.flush();              // flush (force) the command over the socket
+
+            Scanner inStream = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            String response = inStream.nextLine();
+
+            if(response.equals(CAOService.SUCCESSFUL_UPDATE_CURRENT)){
+                System.out.println(Colours.GREEN + response + Colours.RESET);
+            }
+            else {
+                System.out.println(Colours.RED + response + Colours.RESET);
+            }
+            out.close();
+            inStream.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
     }
 
     private void logout()
