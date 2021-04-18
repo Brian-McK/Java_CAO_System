@@ -14,5 +14,5 @@ public interface StudentDaoInterface
 
     boolean checkIfRegistered(Student student) throws DaoException;
 
-//    boolean loginStudent(Student student) throws DaoException;
+    boolean loginStudent(Student student) throws DaoException;
 }

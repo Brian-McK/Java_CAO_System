@@ -133,4 +133,25 @@ public class AppTest
             e.printStackTrace();
         }
     }
+
+    @Test public void TestLoginStudentDAO()
+    {
+        StudentDaoInterface studentDaoInterface = new MySQLStudentDAO();
+        Student student = new Student();
+        student.setCaoNumber(246810);
+        String dobStr = "1990-01-01";
+        Date dobObj = Date.valueOf(dobStr);
+        student.setDob(dobObj);
+        student.setPassword("Billy!?123#");
+
+        try
+        {
+            System.out.println("Test loginStudent()");
+            assertTrue(studentDaoInterface.loginStudent(student));
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
 }
