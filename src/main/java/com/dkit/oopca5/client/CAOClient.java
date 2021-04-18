@@ -1,6 +1,7 @@
 package com.dkit.oopca5.client;
 
 // Brian McKenna - SD2B - Github: https://github.com/Brian-McK/BrianMcKenna_CA5/
+// YouTube link to Screencast: https://youtu.be/15JPz8FMols
 
 /* The client package should contain all code and classes needed to run the Client
  */
