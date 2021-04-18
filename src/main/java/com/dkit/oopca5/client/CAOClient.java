@@ -401,9 +401,39 @@ public class CAOClient
     {
         System.out.println("Display Current Choices Selected");
 
+        try {
+            Socket socket = new Socket("localhost", 8080);  // connect to server socket
+
+            System.out.println("Client message: The Client is running and has connected to the server");
+
         String msgForServer = CAOService.DISPLAY_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber;
 
         System.out.println("Client Request: " + msgForServer);
+
+            OutputStream os = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.write(msgForServer+"\n");  // write command to socket, and newline terminator
+            out.flush();              // flush (force) the command over the socket
+
+            Scanner inStream = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            String response = inStream.nextLine();
+
+            if(response.startsWith(CAOService.SUCCESSFUL_DISPLAY_CURRENT)){
+                System.out.println(Colours.GREEN + response + Colours.RESET);
+            }
+            else {
+                System.out.println(Colours.RED + response + Colours.RESET);
+            }
+            out.close();
+            inStream.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
+
     }
 
     private void updateCurrentChoices(int caoNumber)
