@@ -124,7 +124,32 @@ public class CAOClientHandler implements Runnable
                                         CAOService.BREAKING_CHARACTER + course.getInstitution();
                     }
                     socketWriter.println(response);
+                }
+                else if(message.startsWith(CAOService.DISPLAY_ALL_COURSES_COMMAND))
+                {
+                    String response = CAOService.FAILED_DISPLAY_ALL_COURSES;
 
+                    List<Course> allCourses = ICourseDao.findAllCourses();
+
+                    String courseId, level, title, institution;
+
+                    if (allCourses != null)
+                    {
+                        response = CAOService.SUCCESSFUL_DISPLAY_ALL_COURSES;
+
+                        for (int i = 0; i < allCourses.size(); i++)
+                        {
+                            courseId = allCourses.get(i).getCourseid();
+                            level = String.valueOf(allCourses.get(i).getLevel());
+                            title = allCourses.get(i).getTitle();
+                            institution = allCourses.get(i).getInstitution();
+
+                            response += CAOService.BREAKING_CHARACTER + courseId +
+                                    CAOService.BREAKING_CHARACTER + level + CAOService.BREAKING_CHARACTER + title +
+                                    CAOService.BREAKING_CHARACTER + institution;
+                        }
+                    }
+                    socketWriter.println(response);
                 }
 //                if (message.startsWith("Time"))
 //                {

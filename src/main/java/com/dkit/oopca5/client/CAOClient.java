@@ -344,7 +344,7 @@ public class CAOClient
 
             String response = inStream.nextLine();
 
-            if(!response.isEmpty()){
+            if(response.startsWith(courseid)){
                 System.out.println(Colours.GREEN + response + Colours.RESET);
             }
             else {
@@ -363,9 +363,38 @@ public class CAOClient
     {
         System.out.println("Display All Courses Selected");
 
+        try {
+            Socket socket = new Socket("localhost", 8080);  // connect to server socket
+
+            System.out.println("Client message: The Client is running and has connected to the server");
+
         String msgForServer = CAOService.DISPLAY_ALL_COURSES_COMMAND;
 
         System.out.println("Client Request: " + msgForServer);
+
+            OutputStream os = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.write(msgForServer+"\n");  // write command to socket, and newline terminator
+            out.flush();              // flush (force) the command over the socket
+
+            Scanner inStream = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            String response = inStream.nextLine();
+
+            if(response.startsWith(CAOService.SUCCESSFUL_DISPLAY_ALL_COURSES)){
+                System.out.println(Colours.GREEN + response + Colours.RESET);
+            }
+            else {
+                System.out.println(Colours.RED + response + Colours.RESET);
+            }
+            out.close();
+            inStream.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
     }
 
     private void displayCurrentChoices(int caoNumber)

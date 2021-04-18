@@ -30,10 +30,9 @@ public class CAOService
     public static final String FAILED_LOGOUT = "LOGGED FAILED";
 
     public static final String DISPLAY_COURSE_COMMAND = "DISPLAY COURSE";
-    public static final String SUCCESSFUL_DISPLAY_COURSE = "SUCCESSFUL DISPLAY";
     public static final String FAILED_DISPLAY_COURSE = "DISPLAY FAILED";
 
-    public static final String DISPLAY_ALL_COURSES_COMMAND = "DISPLAY_ALL";
+    public static final String DISPLAY_ALL_COURSES_COMMAND = "DISPLAY ALL";
     public static final String SUCCESSFUL_DISPLAY_ALL_COURSES = "SUCCESSFUL DISPLAY ALL";
     public static final String FAILED_DISPLAY_ALL_COURSES = "FAILED DISPLAY ALL";
 
