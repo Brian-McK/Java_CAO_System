@@ -9,4 +9,8 @@ import java.util.List;
 public interface StudentDaoInterface
 {
     List<Student> findAllStudents() throws DaoException;
+
+    // register and login
+
+    boolean registerStudent(Student student) throws DaoException;
 }

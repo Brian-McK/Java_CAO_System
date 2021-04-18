@@ -4,7 +4,16 @@ package com.dkit.oopca5.core.test;
 
 import com.dkit.oopca5.client.RegexChecker;
 import com.dkit.oopca5.core.CAOService;
+import com.dkit.oopca5.core.DTO.Student;
+import com.dkit.oopca5.core.DTO.Student;
+import com.dkit.oopca5.server.DAO.MySQLStudentDAO;
+import com.dkit.oopca5.server.Exceptions.DaoException;
+import com.dkit.oopca5.server.DAO.MySqlDAO;
+import com.dkit.oopca5.server.DAO.StudentDaoInterface;
 import org.junit.Test;
+
+import java.sql.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
     @Test
     public void shouldAnswerWithTrue()
@@ -79,5 +88,27 @@ public class AppTest
         String expectedResult = "DISPLAY CURRENT%%12345678";
         String actualResult = CAOService.DISPLAY_CURRENT_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber;
         assertEquals(expectedResult,actualResult);
+    }
+
+    @Test
+    public void TestRegisterStudentDAO()
+    {
+        StudentDaoInterface studentDaoInterface = new MySQLStudentDAO();
+        Student student = new Student();
+        student.setCaoNumber(246810);
+        String dobStr = "1990-01-01";
+        Date dobObj = Date.valueOf(dobStr);
+        student.setDob(dobObj);
+        student.setPassword("Billy!?123#");
+
+        try
+        {
+            System.out.println("Test registerStudent()");
+            assertTrue(studentDaoInterface.registerStudent(student));
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
     }
 }
