@@ -7,6 +7,7 @@ The CAOClientHandler will run as a thread. It should listen for messages from th
  */
 
 import com.dkit.oopca5.core.CAOService;
+import com.dkit.oopca5.core.DTO.Course;
 import com.dkit.oopca5.core.DTO.Student;
 import com.dkit.oopca5.server.DAO.*;
 import com.dkit.oopca5.server.Exceptions.DaoException;
@@ -106,7 +107,25 @@ public class CAOClientHandler implements Runnable
                     String response = CAOService.SUCCESSFUL_LOGOUT;
                     socketWriter.println(response);
                 }
+                else if(message.startsWith(CAOService.DISPLAY_COURSE_COMMAND))
+                {
+                    String response = CAOService.FAILED_DISPLAY_COURSE;
+                    String [] components = message.split(CAOService.BREAKING_CHARACTER);
 
+                    String courseId = components[1];
+
+                    Course course = ICourseDao.findCourse(courseId);
+
+                    if(course != null)
+                    {
+                        response =
+                                course.getCourseid().toUpperCase() + CAOService.BREAKING_CHARACTER +
+                                        course.getLevel() + CAOService.BREAKING_CHARACTER + course.getTitle() +
+                                        CAOService.BREAKING_CHARACTER + course.getInstitution();
+                    }
+                    socketWriter.println(response);
+
+                }
 //                if (message.startsWith("Time"))
 //                {
 //                    LocalTime time =  LocalTime.now();
