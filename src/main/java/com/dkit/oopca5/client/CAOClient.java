@@ -11,6 +11,12 @@ package com.dkit.oopca5.client;
 import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 import com.dkit.oopca5.core.DTO.Student;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+import com.dkit.oopca5.server.CAOClientHandler;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -54,7 +60,6 @@ public class CAOClient
     private void mainMenuLoop()
     {
         Scanner scan = new Scanner(System.in);
-
         MainMenu selectedOption = MainMenu.CONTINUE;
         while (selectedOption != MainMenu.QUIT_APPLICATION)
         {
@@ -131,10 +136,40 @@ public class CAOClient
         }
         // Password e.g: Brian!?123#
 
-        String msgForServer =
-                CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
+        try {
+            Socket socket = new Socket("localhost", 8080);  // connect to server socket
 
-        System.out.println("Client Request: " + msgForServer);
+            System.out.println("Client message: The Client is running and has connected to the server");
+
+            String msgForServer =
+                    CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER + dobStr + CAOService.BREAKING_CHARACTER + password;
+
+            System.out.println("Client Request: " + msgForServer);
+
+            OutputStream os = socket.getOutputStream();
+            PrintWriter out = new PrintWriter(os, true);
+
+            out.write(msgForServer+"\n");  // write command to socket, and newline terminator
+            out.flush();              // flush (force) the command over the socket
+
+            Scanner inStream = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            String response = inStream.nextLine();
+
+            if(response.equals(CAOService.SUCCESSFUL_REGISTER)){
+                System.out.println(Colours.GREEN + "Successfully registered" + Colours.RESET);
+            }
+            else {
+                System.out.println(Colours.RED + "Not registered" + Colours.RESET);
+            }
+
+            out.close();
+            inStream.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
     }
 
     private void login()
